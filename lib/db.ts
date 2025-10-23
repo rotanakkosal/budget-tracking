@@ -36,10 +36,23 @@ export async function query(text: string, params?: any[]) {
   }
 }
 
+// Default categories to seed
+const DEFAULT_CATEGORIES = [
+  'Room and Utility',
+  'Daily Expense',
+  'Borrow Others',
+  'Food & Drinks',
+  'Transportation',
+  'Entertainment',
+  'Shopping',
+  'Other'
+];
+
 // Initialize database tables
 export async function initializeDatabase() {
   const pool = getPool();
 
+  // Create tables
   await pool.query(`
     CREATE TABLE IF NOT EXISTS income (
       id VARCHAR(255) PRIMARY KEY,
@@ -83,4 +96,23 @@ export async function initializeDatabase() {
   `);
 
   console.log('Database tables initialized successfully');
+
+  // Seed default categories if none exist
+  const categoriesResult = await pool.query('SELECT COUNT(*) FROM categories');
+  const categoryCount = parseInt(categoriesResult.rows[0].count);
+
+  if (categoryCount === 0) {
+    console.log('Seeding default categories...');
+    for (const category of DEFAULT_CATEGORIES) {
+      const id = 'cat-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+      await pool.query(
+        'INSERT INTO categories (id, name) VALUES ($1, $2) ON CONFLICT (name) DO NOTHING',
+        [id, category]
+      );
+      console.log(`  Added category: ${category}`);
+    }
+    console.log('Default categories seeded successfully');
+  } else {
+    console.log(`Skipping category seeding: ${categoryCount} categories already exist`);
+  }
 }

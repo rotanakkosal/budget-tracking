@@ -80,6 +80,26 @@ Then open http://localhost:3000
 - `yarn db:test` - Test database connection and show table info
 - `yarn verify:setup` - Verify complete environment setup (recommended!)
 
+## Deployment
+
+### Deploy to Vercel
+
+This app is optimized for Vercel deployment. See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for:
+
+- **Step-by-step deployment guide** - Deploy via dashboard or CLI
+- **Environment variable configuration** - Set up DATABASE_URL in Vercel
+- **Database initialization** - Initialize tables on production
+- **Troubleshooting** - Common Vercel-specific issues
+- **Performance optimization** - Connection pooling, region selection, caching
+- **Monitoring and security** - Best practices for production
+
+**Quick deploy:**
+1. Push code to GitHub
+2. Import project to Vercel
+3. Add `DATABASE_URL` environment variable
+4. Deploy
+5. Initialize database: `curl -X POST https://your-app.vercel.app/api/init`
+
 ## Database Setup & Troubleshooting
 
 - **Quick Setup**: See "Getting Started" section above
@@ -117,10 +137,13 @@ budget-tracking/
 │   └── db.ts             # Database connection utility
 ├── scripts/
 │   ├── init-db.ts        # Database initialization script
-│   └── test-connection.ts # Connection test script
+│   ├── test-connection.ts # Connection test script
+│   └── verify-setup.ts   # Setup verification script
 ├── .env                  # Environment variables (git-ignored)
 ├── .env.example          # Environment variables template
-└── DATABASE_SETUP.md     # Database documentation
+├── DATABASE_SETUP.md     # Database documentation
+├── TROUBLESHOOTING.md    # Common issues and solutions
+└── VERCEL_DEPLOYMENT.md  # Vercel deployment guide
 ```
 
 ## API Endpoints

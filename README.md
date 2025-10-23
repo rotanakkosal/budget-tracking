@@ -16,38 +16,53 @@ This is a Next.js 14 app using the App Router and TypeScript with PostgreSQL dat
 
 ## Getting Started
 
-### 1. Install Dependencies
+> **Important:** Can't find your database tables? See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for common setup issues.
+
+### Quick Setup (4 Steps)
+
+#### 1. Install Dependencies
 
 ```bash
 yarn install
 ```
 
-### 2. Configure Database
+#### 2. Configure Database
 
-The database connection is already configured in `.env`. For a new environment:
+Create your `.env` file with database credentials:
 
 ```bash
 cp .env.example .env
-# Edit .env with your database credentials
 ```
 
-### 3. Initialize Database
+Then edit `.env` and replace with your actual Neon.tech database URL:
 
-Create the necessary tables and seed default categories:
+```env
+DATABASE_URL="postgresql://your-user:your-password@your-host.neon.tech:5432/your-database?sslmode=require"
+```
+
+**Note:** The `.env` file is git-ignored for security.
+
+#### 3. Initialize Database
+
+Create all necessary tables and seed default categories:
 
 ```bash
 yarn db:init
 ```
 
-### 4. Test Database Connection (Optional)
+You should see confirmation that tables were created successfully.
 
-Verify the database connection is working:
+#### 4. Verify Setup
+
+Run the verification script to ensure everything is working:
 
 ```bash
-yarn db:test
+yarn verify:setup
 ```
 
-### 5. Start Development Server
+This checks your `.env` file, database connection, and confirms tables exist.
+
+### Start Development
 
 ```bash
 yarn dev
@@ -62,15 +77,18 @@ Then open http://localhost:3000
 - `yarn start` - Start the production server
 - `yarn lint` - Run ESLint
 - `yarn db:init` - Initialize database tables and seed data
-- `yarn db:test` - Test database connection
+- `yarn db:test` - Test database connection and show table info
+- `yarn verify:setup` - Verify complete environment setup (recommended!)
 
-## Database Setup
+## Database Setup & Troubleshooting
 
-See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for detailed information about:
-- Database schema
-- API endpoints
-- Connection configuration
-- Troubleshooting
+- **Quick Setup**: See "Getting Started" section above
+- **Can't find tables?** See [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) - Common issue when tables haven't been initialized yet!
+- **Detailed Info**: See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for:
+  - Complete database schema
+  - API endpoints documentation
+  - Connection configuration details
+  - Advanced troubleshooting
 
 ## Tech Stack
 
